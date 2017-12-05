@@ -3,8 +3,9 @@ import pandas as pd
 from scipy import spatial
 import dill as pickle
 import os
+from flask_cors import CORS
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route('/<location>')
 def hello(location):
