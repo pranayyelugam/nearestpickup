@@ -7,11 +7,12 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/<location>')
-def hello(location):
-	lat,lon=location.split('&')
-	lat = float(lat)
-	lon = float(lon)
+@app.route('/<tno>')
+def hello(tno):
+	id=fd.loc[fd['Truck_number'] == int(tno)]
+	val=id.values.tolist()
+	lat=val[0][1]
+	lon=val[0][2]
 	dis,idx =tree.query([(lat,lon)])
 	index =idx[0]
 	l=lists[index]
@@ -27,6 +28,7 @@ def hello(location):
 if __name__ == '__main__':
 	df = pd.read_csv('final.csv')
 	lists = df.values.tolist()
+	fd = pd.read_csv('Truck.csv')
 	fname = 'tree.pk'
 	print("Loading the model...")
 	tree = None
